@@ -1,49 +1,396 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 6);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="page-wrapper">
+			<!-- Hero - CENTER ALIGNED -->
+			<section class="hero">
+				<span class="hero-label">
+					<span>✦</span> Intelligence Amplified
+				</span>
+				<h1 class="hero-title">
+					AI로 가속화되는<br/>
+					<span class="gradient">지식 생산성 블로그</span>
+				</h1>
+				<p class="hero-desc">
+					PromStack과 LinkStack을 개발하며 얻은 인사이트.<br/>
+					AI를 실무에 적용하는 최선의 방법들을 공유합니다.
+				</p>
+				<div class="hero-actions">
+					<a href="/blog" class="btn btn-primary">블로그 읽기 →</a>
+					<a href="https://promstack.com" target="_blank" class="btn btn-ghost">PromStack 시작하기</a>
+				</div>
+			</section>
+
+			<div class="section-divider"></div>
+
+			<!-- Products -->
+			<section class="products-section">
+				<div class="section-header">
+					<p class="section-label">Ecosystem</p>
+					<h2 class="section-title">Our Products</h2>
+				</div>
+				<div class="products-grid">
+					<a href="https://promstack.com" target="_blank" class="product-card">
+						<div class="product-icon">📝</div>
+						<h3 class="product-name">PromStack</h3>
+						<p class="product-desc">AI 프롬프트 관리의 정석. 팀 협업, 버전 관리, MCP 통합까지.</p>
+						<span class="product-link">promstack.com →</span>
+					</a>
+					<a href="https://link.promstack.com" target="_blank" class="product-card">
+						<div class="product-icon">🔗</div>
+						<h3 class="product-name">LinkStack</h3>
+						<p class="product-desc">AI 기반 북마크 매니저. 저장, 하이라이트, 요약을 한 번에.</p>
+						<span class="product-link">link.promstack.com →</span>
+					</a>
+					<a href="https://github.com/PromStack-1" target="_blank" class="product-card">
+						<div class="product-icon">💻</div>
+						<h3 class="product-name">Open Source</h3>
+						<p class="product-desc">SDK, 확장 기능, 핵심 라이브러리를 오픈소스로 공개합니다.</p>
+						<span class="product-link">GitHub →</span>
+					</a>
+				</div>
+			</section>
+
+			<div class="section-divider"></div>
+
+			<!-- Posts -->
+			<section class="posts-section">
+				<div class="posts-header">
+					<div>
+						<p class="section-label">Latest</p>
+						<h2 class="section-title">Insights</h2>
+					</div>
+					<a href="/blog" class="view-all">View all →</a>
+				</div>
+				<div class="posts-grid">
+					{posts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="post-card">
+							<div class="post-image">
+								{post.data.heroImage && (
+									<img src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src} alt="" />
+								)}
+							</div>
+							<span class="post-meta"><FormattedDate date={post.data.pubDate} /></span>
+							<h3 class="post-title">{post.data.title}</h3>
+						</a>
+					))}
+				</div>
+			</section>
 		</main>
 		<Footer />
+
+		<script>
+			document.querySelectorAll('.product-card').forEach(card => {
+				card.addEventListener('mousemove', (e) => {
+					const rect = card.getBoundingClientRect();
+					const x = ((e.clientX - rect.left) / rect.width) * 100;
+					const y = ((e.clientY - rect.top) / rect.height) * 100;
+					(card as HTMLElement).style.setProperty('--mouse-x', x + '%');
+					(card as HTMLElement).style.setProperty('--mouse-y', y + '%');
+				});
+			});
+		</script>
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		--bg-base: #0a0a0c;
+		--bg-elevated: #111114;
+		--bg-card: #16161a;
+		--text-primary: #fafafa;
+		--text-secondary: #a1a1aa;
+		--text-muted: #52525b;
+		--accent: #818cf8;
+		--accent-glow: rgba(129, 140, 248, 0.15);
+		--border: rgba(255, 255, 255, 0.06);
+		--border-hover: rgba(255, 255, 255, 0.12);
+	}
+
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+
+	body {
+		background: var(--bg-base);
+		color: var(--text-primary);
+		font-family: 'DM Sans', -apple-system, sans-serif;
+		min-height: 100vh;
+		overflow-x: hidden;
+	}
+
+	.page-wrapper {
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 3rem;
+	}
+
+	/* Hero Section - CENTER ALIGNED */
+	.hero {
+		min-height: 85vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		padding: 8rem 0;
+	}
+
+	.hero-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin-bottom: 2rem;
+	}
+
+	.hero-title {
+		font-size: clamp(3.5rem, 9vw, 6rem);
+		font-weight: 800;
+		line-height: 1.05;
+		letter-spacing: -0.04em;
+		margin-bottom: 2rem;
+		max-width: 900px;
+	}
+
+	.hero-title .gradient {
+		background: linear-gradient(135deg, #fff 0%, var(--accent) 50%, #c084fc 100%);
+		background-size: 200% auto;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	.hero-desc {
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		max-width: 600px;
+		line-height: 1.7;
+		margin-bottom: 3rem;
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 1rem 2rem;
+		font-family: 'DM Sans', sans-serif;
+		font-size: 1rem;
+		font-weight: 600;
+		border-radius: 12px;
+		text-decoration: none;
+		transition: all 0.3s ease;
+	}
+
+	.btn-primary {
+		background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+		color: #fff;
+		box-shadow: 0 4px 24px var(--accent-glow);
+	}
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 32px var(--accent-glow);
+	}
+
+	.btn-ghost {
+		background: transparent;
+		color: var(--text-primary);
+		border: 1px solid var(--border);
+	}
+	.btn-ghost:hover {
+		background: rgba(255,255,255,0.03);
+		border-color: var(--border-hover);
+	}
+
+	.section-divider {
+		width: 100%;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--border), transparent);
+		margin: 4rem 0;
+	}
+
+	/* Products Section */
+	.products-section {
+		padding: 6rem 0;
+	}
+
+	.section-header {
+		text-align: center;
+		margin-bottom: 4rem;
+	}
+
+	.section-label {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		margin-bottom: 1rem;
+	}
+
+	.section-title {
+		font-size: clamp(2.5rem, 5vw, 3.5rem);
+		font-weight: 800;
+		letter-spacing: -0.03em;
+	}
+
+	.products-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.product-card {
+		position: relative;
+		padding: 2.5rem;
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: 24px;
+		text-decoration: none;
+		transition: all 0.4s ease;
+		overflow: hidden;
+	}
+
+	.product-card:hover {
+		border-color: var(--border-hover);
+		transform: translateY(-8px);
+		box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+	}
+
+	.product-icon {
+		font-size: 3rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.product-name {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-bottom: 0.75rem;
+	}
+
+	.product-desc {
+		font-size: 1rem;
+		color: var(--text-secondary);
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+
+	.product-link {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--accent);
+	}
+
+	/* Posts Section */
+	.posts-section {
+		padding: 6rem 0;
+	}
+
+	.posts-header {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		margin-bottom: 3rem;
+	}
+
+	.view-all {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.view-all:hover { text-decoration: underline; }
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+
+	.post-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		transition: transform 0.3s ease;
+	}
+	.post-card:hover { transform: translateY(-6px); }
+
+	.post-image {
+		aspect-ratio: 16/10;
+		background: var(--bg-elevated);
+		border-radius: 16px;
+		overflow: hidden;
+		margin-bottom: 1.25rem;
+		border: 1px solid var(--border);
+	}
+
+	.post-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+	.post-card:hover .post-image img { transform: scale(1.05); }
+
+	.post-meta {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		margin-bottom: 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.post-title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: var(--text-primary);
+		line-height: 1.4;
+		transition: color 0.2s ease;
+	}
+	.post-card:hover .post-title { color: var(--accent); }
+
+	@media (max-width: 1200px) {
+		.products-grid, .posts-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+	@media (max-width: 768px) {
+		.page-wrapper { padding: 0 1.5rem; }
+		.products-grid, .posts-grid { grid-template-columns: 1fr; }
+		.hero { min-height: auto; padding: 4rem 0; }
+	}
+</style>

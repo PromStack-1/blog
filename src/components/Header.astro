@@ -5,83 +5,101 @@ import HeaderLink from './HeaderLink.astro';
 
 <header>
 	<nav>
-		<div class="nav-left">
-			<a href="/" class="logo">
-				<span class="logo-icon">📝</span>
-				{SITE_TITLE}
+		<a href="/" class="logo">
+			<span class="logo-icon">✦</span>
+			<span class="logo-text">{SITE_TITLE}</span>
+		</a>
+		<div class="nav-links">
+			<HeaderLink href="/">Home</HeaderLink>
+			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
+		</div>
+		<div class="nav-products">
+			<a href="https://promstack.com" target="_blank" class="product-btn promstack">
+				📝 PromStack
 			</a>
-		</div>
-		<div class="nav-center">
-			<HeaderLink href="/">홈</HeaderLink>
-			<HeaderLink href="/blog">블로그</HeaderLink>
-			<HeaderLink href="/about">소개</HeaderLink>
-		</div>
-		<div class="nav-right">
-			<a href="https://promstack.com" target="_blank" class="cta-button">
-				PromStack →
+			<a href="https://link.promstack.com" target="_blank" class="product-btn linkstack">
+				🔗 LinkStack
 			</a>
 		</div>
 	</nav>
 </header>
+
 <style>
 	header {
 		position: sticky;
 		top: 0;
-		z-index: 50;
-		background: rgba(10, 10, 11, 0.8);
-		backdrop-filter: blur(12px);
-		border-bottom: 1px solid #27272a;
+		z-index: 100;
+		background: rgba(10, 10, 12, 0.8);
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 	}
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		max-width: 1200px;
+		max-width: 1600px;
 		margin: 0 auto;
-		padding: 0.75rem 1.5rem;
-	}
-	.nav-left, .nav-center, .nav-right {
-		display: flex;
-		align-items: center;
+		padding: 1rem 3rem;
 	}
 	.logo {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-weight: 600;
-		font-size: 1.125rem;
-		color: #f4f4f5;
+		gap: 0.75rem;
 		text-decoration: none;
-	}
-	.logo:hover {
-		color: #f4f4f5;
 	}
 	.logo-icon {
 		font-size: 1.25rem;
+		color: #818cf8;
 	}
-	.nav-center {
+	.logo-text {
+		font-weight: 700;
+		font-size: 1.125rem;
+		color: #fafafa;
+		letter-spacing: -0.01em;
+	}
+	.nav-links {
+		display: flex;
 		gap: 0.5rem;
 	}
-	.cta-button {
-		padding: 0.5rem 1rem;
-		background: #6366f1;
-		color: white;
-		border-radius: 8px;
-		font-size: 0.875rem;
-		font-weight: 500;
-		text-decoration: none;
-		transition: background 0.2s ease;
+	.nav-products {
+		display: flex;
+		gap: 0.75rem;
 	}
-	.cta-button:hover {
-		background: #4f46e5;
-		color: white;
+	.product-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.625rem 1rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		border-radius: 10px;
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+	.product-btn.promstack {
+		background: rgba(99, 102, 241, 0.1);
+		color: #a5b4fc;
+		border: 1px solid rgba(99, 102, 241, 0.2);
+	}
+	.product-btn.promstack:hover {
+		background: rgba(99, 102, 241, 0.2);
+	}
+	.product-btn.linkstack {
+		background: rgba(16, 185, 129, 0.1);
+		color: #6ee7b7;
+		border: 1px solid rgba(16, 185, 129, 0.2);
+	}
+	.product-btn.linkstack:hover {
+		background: rgba(16, 185, 129, 0.2);
+	}
+
+	@media (max-width: 900px) {
+		nav { padding: 1rem 1.5rem; }
+		.nav-products { display: none; }
 	}
 	@media (max-width: 640px) {
-		.nav-right {
-			display: none;
-		}
-		nav {
-			padding: 0.75rem 1rem;
-		}
+		.logo-text { display: none; }
 	}
 </style>

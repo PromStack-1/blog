@@ -1,112 +1,293 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const featuredPost = posts[0];
+const otherPosts = posts.slice(1);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`블로그 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 		<style>
-			main {
-				width: 960px;
+			:root {
+				--bg-base: #0a0a0c;
+				--bg-elevated: #111114;
+				--bg-card: #16161a;
+				--text-primary: #fafafa;
+				--text-secondary: #a1a1aa;
+				--text-muted: #52525b;
+				--accent: #818cf8;
+				--border: rgba(255, 255, 255, 0.06);
+				--border-hover: rgba(255, 255, 255, 0.12);
 			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
+
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+
+			body {
+				background: var(--bg-base);
+				color: var(--text-primary);
+				font-family: 'DM Sans', -apple-system, sans-serif;
 			}
-			ul li {
-				width: calc(50% - 1rem);
+
+			/* Grain overlay */
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+				opacity: 0.03;
+				background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+				z-index: 9999;
 			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
+
+			.blog-wrapper {
+				max-width: 1600px;
+				margin: 0 auto;
+				padding: 4rem 3rem;
 			}
-			ul li:first-child {
-				width: 100%;
+
+			/* Page Header */
+			.page-header {
+				margin-bottom: 4rem;
+			}
+			.page-label {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.3em;
+				text-transform: uppercase;
+				color: var(--text-muted);
 				margin-bottom: 1rem;
-				text-align: center;
 			}
-			ul li:first-child img {
+			.page-title {
+				font-size: clamp(2.5rem, 5vw, 4rem);
+				font-weight: 800;
+				letter-spacing: -0.03em;
+				margin-bottom: 0.75rem;
+			}
+			.page-desc {
+				font-size: 1.125rem;
+				color: var(--text-secondary);
+			}
+
+			/* Featured - Full Width */
+			.featured {
+				margin-bottom: 5rem;
+			}
+			.featured-card {
+				display: grid;
+				grid-template-columns: 1.4fr 0.6fr;
+				gap: 4rem;
+				padding: 3rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 28px;
+				text-decoration: none;
+				transition: all 0.4s ease;
+				align-items: center;
+			}
+			.featured-card:hover {
+				border-color: var(--border-hover);
+				transform: translateY(-6px);
+				box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+			}
+			.featured-image {
+				border-radius: 20px;
+				overflow: hidden;
+				aspect-ratio: 16/9;
+				background: var(--bg-elevated);
+			}
+			.featured-image img {
 				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.5s ease;
 			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
+			.featured-card:hover .featured-image img {
+				transform: scale(1.03);
 			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
+			.featured-badge {
+				display: inline-flex;
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				padding: 0.5rem 1rem;
+				background: rgba(129, 140, 248, 0.15);
+				color: var(--accent);
+				border-radius: 8px;
+				margin-bottom: 1.5rem;
 			}
-			ul li a {
-				display: block;
+			.featured-title {
+				font-size: 2.25rem;
+				font-weight: 700;
+				line-height: 1.2;
+				margin-bottom: 1rem;
+				letter-spacing: -0.02em;
 			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
+			.featured-card:hover .featured-title {
+				color: var(--accent);
 			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
+			.featured-excerpt {
+				font-size: 1.0625rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+				margin-bottom: 1.5rem;
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
+			.featured-meta {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.75rem;
+				color: var(--text-muted);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
 			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
+
+			/* Section Divider */
+			.section-divider {
+				width: 100%;
+				height: 1px;
+				background: linear-gradient(90deg, transparent, var(--border), transparent);
+				margin: 4rem 0;
 			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
+
+			/* Posts Grid - 3 columns */
+			.posts-section h2 {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.75rem;
+				font-weight: 600;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+				margin-bottom: 2rem;
+			}
+			.posts-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 2.5rem;
+			}
+			.post-card {
+				display: flex;
+				flex-direction: column;
+				text-decoration: none;
+				transition: transform 0.3s ease;
+			}
+			.post-card:hover {
+				transform: translateY(-6px);
+			}
+			.post-image {
+				aspect-ratio: 16/10;
+				background: var(--bg-elevated);
+				border-radius: 16px;
+				overflow: hidden;
+				margin-bottom: 1.25rem;
+				border: 1px solid var(--border);
+			}
+			.post-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.5s ease;
+			}
+			.post-card:hover .post-image img {
+				transform: scale(1.05);
+			}
+			.post-meta {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				color: var(--text-muted);
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				margin-bottom: 0.625rem;
+			}
+			.post-title {
+				font-size: 1.25rem;
+				font-weight: 600;
+				line-height: 1.4;
+				transition: color 0.2s ease;
+			}
+			.post-card:hover .post-title {
+				color: var(--accent);
+			}
+			.post-excerpt {
+				font-size: 0.9375rem;
+				color: var(--text-secondary);
+				line-height: 1.5;
+				margin-top: 0.5rem;
+			}
+
+			/* Responsive */
+			@media (max-width: 1200px) {
+				.featured-card { grid-template-columns: 1fr; gap: 2rem; }
+				.posts-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+			@media (max-width: 768px) {
+				.blog-wrapper { padding: 2rem 1.5rem; }
+				.posts-grid { grid-template-columns: 1fr; }
+				.featured-title { font-size: 1.75rem; }
 			}
 		</style>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+		<main class="blog-wrapper">
+			<header class="page-header">
+				<p class="page-label">Knowledge Base</p>
+				<h1 class="page-title">Blog</h1>
+				<p class="page-desc">AI, 프롬프트 엔지니어링, 그리고 개발에 대한 인사이트</p>
+			</header>
+
+			{featuredPost && (
+				<section class="featured">
+					<a href={`/blog/${featuredPost.id}/`} class="featured-card">
+						<div class="featured-image">
+							{featuredPost.data.heroImage && (
+								<img src={typeof featuredPost.data.heroImage === 'string' ? featuredPost.data.heroImage : featuredPost.data.heroImage.src} alt="" />
+							)}
+						</div>
+						<div class="featured-content">
+							<span class="featured-badge">Featured Post</span>
+							<h2 class="featured-title">{featuredPost.data.title}</h2>
+							<p class="featured-excerpt">{featuredPost.data.description}</p>
+							<span class="featured-meta">
+								<FormattedDate date={featuredPost.data.pubDate} />
+							</span>
+						</div>
+					</a>
+				</section>
+			)}
+
+			<div class="section-divider"></div>
+
+			<section class="posts-section">
+				<h2>All Posts</h2>
+				<div class="posts-grid">
+					{otherPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="post-card">
+							<div class="post-image">
+								{post.data.heroImage && (
+									<img src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src} alt="" />
+								)}
+							</div>
+							<span class="post-meta"><FormattedDate date={post.data.pubDate} /></span>
+							<h3 class="post-title">{post.data.title}</h3>
+							<p class="post-excerpt">{post.data.description}</p>
+						</a>
+					))}
+				</div>
 			</section>
 		</main>
 		<Footer />

@@ -1,63 +1,331 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`소개 | ${SITE_TITLE}`} description="PromStack 팀과 프로젝트에 대해 소개합니다." />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+		<style>
+			:root {
+				--bg-base: #0a0a0c;
+				--bg-elevated: #111114;
+				--bg-card: #16161a;
+				--text-primary: #fafafa;
+				--text-secondary: #a1a1aa;
+				--text-muted: #52525b;
+				--accent: #818cf8;
+				--border: rgba(255, 255, 255, 0.06);
+			}
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			body {
+				background: var(--bg-base);
+				color: var(--text-primary);
+				font-family: 'DM Sans', -apple-system, sans-serif;
+			}
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			/* Grain */
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+				opacity: 0.03;
+				background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+				z-index: 9999;
+			}
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+			.about-wrapper {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 6rem 3rem;
+			}
+
+			/* Hero */
+			.about-hero {
+				text-align: center;
+				margin-bottom: 6rem;
+			}
+			.about-icon {
+				width: 100px;
+				height: 100px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(135deg, rgba(129, 140, 248, 0.2), rgba(192, 132, 252, 0.2));
+				border-radius: 28px;
+				margin: 0 auto 2rem;
+				font-size: 2.5rem;
+			}
+			.about-title {
+				font-size: clamp(2.5rem, 5vw, 4rem);
+				font-weight: 800;
+				letter-spacing: -0.03em;
+				margin-bottom: 1rem;
+			}
+			.about-subtitle {
+				font-size: 1.25rem;
+				color: var(--text-secondary);
+				max-width: 600px;
+				margin: 0 auto;
+				line-height: 1.6;
+			}
+
+			/* Mission Card */
+			.mission {
+				padding: 3.5rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 28px;
+				text-align: center;
+				margin-bottom: 5rem;
+			}
+			.mission-label {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.3em;
+				text-transform: uppercase;
+				color: var(--accent);
+				margin-bottom: 1.5rem;
+			}
+			.mission-text {
+				font-size: 1.5rem;
+				font-weight: 500;
+				line-height: 1.6;
+				color: var(--text-primary);
+				max-width: 800px;
+				margin: 0 auto;
+			}
+
+			/* Section */
+			.section {
+				margin-bottom: 4rem;
+			}
+			.section-header {
+				margin-bottom: 2rem;
+			}
+			.section-label {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.3em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+				margin-bottom: 0.75rem;
+			}
+			.section-title {
+				font-size: 2rem;
+				font-weight: 700;
+				letter-spacing: -0.02em;
+			}
+
+			/* Products */
+			.products-list {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.5rem;
+			}
+			.product-item {
+				display: flex;
+				align-items: flex-start;
+				gap: 1.5rem;
+				padding: 2rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 20px;
+				text-decoration: none;
+				transition: all 0.3s ease;
+			}
+			.product-item:hover {
+				border-color: rgba(255, 255, 255, 0.12);
+				transform: translateY(-4px);
+			}
+			.product-icon {
+				width: 56px;
+				height: 56px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: var(--bg-elevated);
+				border-radius: 14px;
+				font-size: 1.5rem;
+				flex-shrink: 0;
+			}
+			.product-info h3 {
+				font-size: 1.25rem;
+				font-weight: 700;
+				margin-bottom: 0.5rem;
+			}
+			.product-info p {
+				font-size: 0.9375rem;
+				color: var(--text-secondary);
+				line-height: 1.5;
+				margin-bottom: 0.75rem;
+			}
+			.product-link {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.75rem;
+				font-weight: 600;
+				color: var(--accent);
+			}
+
+			/* Topics */
+			.topics-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1rem;
+			}
+			.topic-item {
+				padding: 1.5rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 16px;
+				text-align: center;
+			}
+			.topic-icon {
+				font-size: 2rem;
+				margin-bottom: 0.75rem;
+			}
+			.topic-name {
+				font-size: 1rem;
+				font-weight: 600;
+			}
+
+			/* Links */
+			.links-row {
+				display: flex;
+				gap: 1rem;
+				flex-wrap: wrap;
+				margin-top: 2rem;
+			}
+			.link-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				padding: 0.875rem 1.5rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				color: var(--text-primary);
+				font-size: 0.9375rem;
+				font-weight: 600;
+				text-decoration: none;
+				transition: all 0.2s ease;
+			}
+			.link-btn:hover {
+				background: var(--bg-elevated);
+				border-color: rgba(255, 255, 255, 0.12);
+			}
+
+			/* Responsive */
+			@media (max-width: 900px) {
+				.products-list { grid-template-columns: 1fr; }
+				.topics-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+			@media (max-width: 640px) {
+				.about-wrapper { padding: 3rem 1.5rem; }
+				.topics-grid { grid-template-columns: 1fr; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main class="about-wrapper">
+			<section class="about-hero">
+				<div class="about-icon">📝</div>
+				<h1 class="about-title">PromStack Blog</h1>
+				<p class="about-subtitle">
+					AI와 개발 생산성에 대한 인사이트를 공유합니다
+				</p>
+			</section>
+
+			<section class="mission">
+				<p class="mission-label">🎯 Our Mission</p>
+				<p class="mission-text">
+					개발자들이 AI를 더 효과적으로 활용할 수 있도록 돕습니다.<br/>
+					프롬프트 엔지니어링 팁부터 실전 워크플로우까지, 실용적인 지식을 공유합니다.
+				</p>
+			</section>
+
+			<section class="section">
+				<div class="section-header">
+					<p class="section-label">Products</p>
+					<h2 class="section-title">Our Ecosystem</h2>
+				</div>
+				<div class="products-list">
+					<a href="https://promstack.com" target="_blank" class="product-item">
+						<div class="product-icon">📝</div>
+						<div class="product-info">
+							<h3>PromStack</h3>
+							<p>AI 프롬프트를 체계적으로 관리하고 팀과 공유하세요. 버전 관리, 협업, MCP 통합 지원.</p>
+							<span class="product-link">promstack.com →</span>
+						</div>
+					</a>
+					<a href="https://link.promstack.com" target="_blank" class="product-item">
+						<div class="product-icon">🔗</div>
+						<div class="product-info">
+							<h3>LinkStack</h3>
+							<p>웹에서 발견한 모든 것을 저장하고 관리하세요. AI 요약, 하이라이트, 팀 공유 기능.</p>
+							<span class="product-link">linkstack.site →</span>
+						</div>
+					</a>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="section-header">
+					<p class="section-label">Topics</p>
+					<h2 class="section-title">What We Write About</h2>
+				</div>
+				<div class="topics-grid">
+					<div class="topic-item">
+						<div class="topic-icon">🤖</div>
+						<p class="topic-name">AI & LLM</p>
+					</div>
+					<div class="topic-item">
+						<div class="topic-icon">✍️</div>
+						<p class="topic-name">Prompt Engineering</p>
+					</div>
+					<div class="topic-item">
+						<div class="topic-icon">⚡</div>
+						<p class="topic-name">Productivity</p>
+					</div>
+					<div class="topic-item">
+						<div class="topic-icon">🛠️</div>
+						<p class="topic-name">Developer Tools</p>
+					</div>
+					<div class="topic-item">
+						<div class="topic-icon">📦</div>
+						<p class="topic-name">Product Updates</p>
+					</div>
+					<div class="topic-item">
+						<div class="topic-icon">💡</div>
+						<p class="topic-name">Insights</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="section-header">
+					<p class="section-label">Connect</p>
+					<h2 class="section-title">Links</h2>
+				</div>
+				<div class="links-row">
+					<a href="https://promstack.com" target="_blank" class="link-btn">📝 PromStack</a>
+					<a href="https://link.promstack.com" target="_blank" class="link-btn">🔗 LinkStack</a>
+					<a href="https://github.com/PromStack-1" target="_blank" class="link-btn">💻 GitHub</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
