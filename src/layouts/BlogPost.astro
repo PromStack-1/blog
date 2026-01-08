@@ -14,58 +14,308 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="ko">
 	<head>
 		<BaseHead title={title} description={description} />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 		<style>
-			.article-container {
-				max-width: 720px;
+			:root {
+				--bg: #050505;
+				--bg-elevated: #0a0a0a;
+				--bg-card: #111111;
+				--text: #ffffff;
+				--text-secondary: #a1a1aa;
+				--text-muted: #71717a;
+				--accent: #6366f1;
+				--border: rgba(255, 255, 255, 0.08);
+			}
+
+			body {
+				background: var(--bg);
+				color: var(--text);
+				font-family: 'Inter', -apple-system, sans-serif;
+			}
+
+			main {
+				max-width: 1200px;
 				margin: 0 auto;
-				padding: 2rem 1.5rem;
+				padding: 0 3rem;
 			}
-			.hero-image {
-				margin-bottom: 2rem;
+
+			/* Hero Section */
+			.article-hero {
+				padding: 4rem 0;
+				border-bottom: 1px solid var(--border);
+				margin-bottom: 4rem;
 			}
-			.hero-image img {
-				width: 100%;
-				border-radius: 16px;
-			}
-			.article-header {
-				margin-bottom: 2rem;
-			}
+
 			.article-meta {
 				display: flex;
 				align-items: center;
 				gap: 1rem;
-				margin-bottom: 1rem;
-				color: #71717a;
+				margin-bottom: 1.5rem;
+			}
+
+			.article-date {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.75rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--text-muted);
+			}
+
+			.updated-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.25rem;
+				padding: 0.25rem 0.75rem;
+				background: rgba(99, 102, 241, 0.1);
+				color: var(--accent);
+				font-size: 0.6875rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				border-radius: 100px;
+			}
+
+			.article-title {
+				font-size: clamp(2.5rem, 5vw, 4rem);
+				font-weight: 800;
+				line-height: 1.1;
+				letter-spacing: -0.03em;
+				margin: 0 0 1.5rem;
+				max-width: 900px;
+			}
+
+			.article-description {
+				font-size: 1.25rem;
+				color: var(--text-secondary);
+				line-height: 1.6;
+				max-width: 700px;
+				margin: 0;
+			}
+
+			/* Hero Image */
+			.hero-image {
+				margin-bottom: 3rem;
+				border-radius: 20px;
+				overflow: hidden;
+				border: 1px solid var(--border);
+			}
+
+			.hero-image img {
+				width: 100%;
+				height: auto;
+				display: block;
+			}
+
+			/* Two Column Layout */
+			.article-layout {
+				display: grid;
+				grid-template-columns: 1fr 280px;
+				gap: 4rem;
+				padding-bottom: 6rem;
+			}
+
+			/* Prose Content */
+			.prose {
+				color: var(--text-secondary);
+				font-size: 1.0625rem;
+				line-height: 1.8;
+			}
+
+			.prose h2 {
+				font-size: 1.75rem;
+				font-weight: 700;
+				color: var(--text);
+				margin: 3rem 0 1.5rem;
+				letter-spacing: -0.02em;
+			}
+
+			.prose h3 {
+				font-size: 1.375rem;
+				font-weight: 600;
+				color: var(--text);
+				margin: 2.5rem 0 1rem;
+			}
+
+			.prose p {
+				margin-bottom: 1.5rem;
+			}
+
+			.prose a {
+				color: var(--accent);
+				text-decoration: underline;
+				text-underline-offset: 2px;
+			}
+
+			.prose a:hover {
+				text-decoration: none;
+			}
+
+			.prose ul, .prose ol {
+				padding-left: 1.5rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.prose li {
+				margin-bottom: 0.5rem;
+			}
+
+			.prose blockquote {
+				border-left: 3px solid var(--accent);
+				padding-left: 1.5rem;
+				margin: 2rem 0;
+				font-style: italic;
+				color: var(--text-muted);
+			}
+
+			.prose pre {
+				background: var(--bg-card) !important;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				padding: 1.5rem;
+				overflow-x: auto;
+				margin: 2rem 0;
+			}
+
+			.prose code {
+				font-family: 'JetBrains Mono', monospace;
 				font-size: 0.875rem;
 			}
-			.article-title {
-				font-size: 2.25rem;
-				font-weight: 700;
-				line-height: 1.2;
-				margin: 0;
-				color: #f4f4f5;
+
+			.prose :not(pre) > code {
+				background: var(--bg-card);
+				padding: 0.2em 0.4em;
+				border-radius: 4px;
+				font-size: 0.9em;
 			}
-			.article-description {
-				margin-top: 1rem;
-				color: #a1a1aa;
-				font-size: 1.125rem;
-				line-height: 1.6;
+
+			.prose img {
+				border-radius: 12px;
+				margin: 2rem 0;
 			}
-			.updated-badge {
-				background: #27272a;
-				padding: 0.25rem 0.75rem;
-				border-radius: 9999px;
-				font-size: 0.75rem;
+
+			.prose hr {
+				border: none;
+				border-top: 1px solid var(--border);
+				margin: 3rem 0;
 			}
-			.prose {
-				color: #d4d4d8;
+
+			.prose table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 2rem 0;
 			}
-			@media (max-width: 640px) {
-				.article-title {
-					font-size: 1.75rem;
+
+			.prose th, .prose td {
+				padding: 0.75rem 1rem;
+				border: 1px solid var(--border);
+				text-align: left;
+			}
+
+			.prose th {
+				background: var(--bg-card);
+				font-weight: 600;
+				color: var(--text);
+			}
+
+			/* Sidebar */
+			.article-sidebar {
+				position: sticky;
+				top: 2rem;
+				height: fit-content;
+			}
+
+			.sidebar-section {
+				padding: 1.5rem;
+				background: var(--bg-card);
+				border: 1px solid var(--border);
+				border-radius: 16px;
+				margin-bottom: 1.5rem;
+			}
+
+			.sidebar-title {
+				font-family: 'JetBrains Mono', monospace;
+				font-size: 0.6875rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: var(--text-muted);
+				margin-bottom: 1rem;
+			}
+
+			.sidebar-link {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				padding: 0.75rem;
+				background: var(--bg-elevated);
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				text-decoration: none;
+				color: var(--text);
+				font-size: 0.875rem;
+				font-weight: 500;
+				transition: all 0.2s ease;
+				margin-bottom: 0.75rem;
+			}
+
+			.sidebar-link:last-child {
+				margin-bottom: 0;
+			}
+
+			.sidebar-link:hover {
+				border-color: rgba(99, 102, 241, 0.3);
+				background: rgba(99, 102, 241, 0.05);
+			}
+
+			.sidebar-link span {
+				font-size: 1.25rem;
+			}
+
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--accent);
+				font-size: 0.875rem;
+				font-weight: 600;
+				text-decoration: none;
+				margin-bottom: 2rem;
+			}
+
+			.back-link:hover {
+				text-decoration: underline;
+			}
+
+			/* Responsive */
+			@media (max-width: 1000px) {
+				.article-layout {
+					grid-template-columns: 1fr;
 				}
-				.article-container {
-					padding: 1.5rem 1rem;
+				.article-sidebar {
+					position: static;
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+					gap: 1rem;
+				}
+				.sidebar-section {
+					margin-bottom: 0;
+				}
+			}
+
+			@media (max-width: 768px) {
+				main {
+					padding: 0 1.5rem;
+				}
+				.article-hero {
+					padding: 2rem 0;
+				}
+				.article-title {
+					font-size: 2rem;
+				}
+				.article-sidebar {
+					grid-template-columns: 1fr;
 				}
 			}
 		</style>
@@ -74,15 +324,14 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	<body>
 		<Header />
 		<main>
-			<article class="article-container">
-				{heroImage && (
-					<div class="hero-image">
-						<Image width={1020} height={510} src={heroImage} alt="" />
-					</div>
-				)}
-				<header class="article-header">
+			<a href="/blog" class="back-link">
+				← Back to Blog
+			</a>
+
+			<article>
+				<header class="article-hero">
 					<div class="article-meta">
-						<FormattedDate date={pubDate} />
+						<span class="article-date"><FormattedDate date={pubDate} /></span>
 						{updatedDate && (
 							<span class="updated-badge">
 								Updated <FormattedDate date={updatedDate} />
@@ -92,9 +341,42 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					<h1 class="article-title">{title}</h1>
 					{description && <p class="article-description">{description}</p>}
 				</header>
-				<hr />
-				<div class="prose">
-					<slot />
+
+				{heroImage && (
+					<div class="hero-image">
+						<Image width={1200} height={600} src={heroImage} alt="" />
+					</div>
+				)}
+
+				<div class="article-layout">
+					<div class="prose">
+						<slot />
+					</div>
+
+					<aside class="article-sidebar">
+						<div class="sidebar-section">
+							<h3 class="sidebar-title">Our Products</h3>
+							<a href="https://promstack.com" target="_blank" class="sidebar-link">
+								<span>📝</span>
+								PromStack
+							</a>
+							<a href="https://link.promstack.com" target="_blank" class="sidebar-link">
+								<span>🔗</span>
+								LinkStack
+							</a>
+						</div>
+						<div class="sidebar-section">
+							<h3 class="sidebar-title">Resources</h3>
+							<a href="https://github.com/PromStack-1" target="_blank" class="sidebar-link">
+								<span>💻</span>
+								GitHub
+							</a>
+							<a href="/blog" class="sidebar-link">
+								<span>📰</span>
+								All Posts
+							</a>
+						</div>
+					</aside>
 				</div>
 			</article>
 		</main>
