@@ -2,7 +2,7 @@
 title: 'MCP (Model Context Protocol) 완벽 가이드 - AI 에이전트의 새로운 표준'
 description: 'Anthropic이 발표한 MCP란 무엇인가? Claude Desktop, VS Code와 연동하는 방법부터 직접 MCP 서버를 구축하는 방법까지.'
 pubDate: 'Jan 06 2026'
-heroImage: '/blog-placeholder-5.jpg'
+heroImage: '../../assets/blog-placeholder-5.jpg'
 ---
 
 MCP(Model Context Protocol)는 Anthropic이 2024년 11월에 발표한 **AI 에이전트의 새로운 표준**입니다. AI 모델이 외부 도구와 데이터 소스에 접근하는 통합된 방식을 제공합니다.

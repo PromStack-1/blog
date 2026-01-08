@@ -2,7 +2,7 @@
 title: 'PromStack 소개 - AI 네이티브 팀을 위한 올인원 프롬프트 관리 플랫폼'
 description: 'AI 프롬프트 관리, 에이전트 빌더, 테스트 자동화, MCP 통합까지. PromStack의 핵심 기능과 사용 방법을 소개합니다.'
 pubDate: 'Jan 08 2026'
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '../../assets/blog-placeholder-3.jpg'
 ---
 
 PromStack은 **AI 네이티브 팀을 위한 올인원 협업 플랫폼**입니다. 프롬프트 엔지니어링부터 AI 에이전트 구축, 테스트 자동화, MCP 통합까지 모든 LLMOps 작업을 하나의 플랫폼에서 처리할 수 있습니다.

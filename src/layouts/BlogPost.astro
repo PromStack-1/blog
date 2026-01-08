@@ -344,7 +344,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
 				{heroImage && (
 					<div class="hero-image">
-						<Image width={1200} height={600} src={heroImage} alt="" />
+						{typeof heroImage === 'string' ? (
+							<img width={1200} height={600} src={heroImage} alt="" />
+						) : (
+							<Image width={1200} height={600} src={heroImage} alt="" />
+						)}
 					</div>
 				)}
 

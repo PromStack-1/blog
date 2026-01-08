@@ -2,7 +2,7 @@
 title: 'LinkStack 소개 - AI 기반 북마크 & 지식 관리 플랫폼'
 description: 'Chrome 확장 프로그램으로 웹 페이지를 저장하고, AI 요약과 하이라이트로 지식을 체계적으로 관리하세요. LinkStack의 모든 기능을 소개합니다.'
 pubDate: 'Jan 08 2026'
-heroImage: '/blog-placeholder-4.jpg'
+heroImage: '../../assets/blog-placeholder-4.jpg'
 ---
 
 LinkStack은 **AI 네이티브 링크 관리 플랫폼**입니다. Chrome 확장 프로그램과 웹 대시보드를 통해 웹 페이지의 링크와 컨텍스트를 저장하고, AI와 함께 지식 베이스를 구축할 수 있습니다.

@@ -2,7 +2,7 @@
 title: 'AI 시대의 프롬프트 엔지니어링 - 실무에서 배운 7가지 원칙'
 description: 'PromStack을 개발하며 수천 개의 프롬프트를 분석한 경험을 바탕으로 정리한 프롬프트 엔지니어링 핵심 원칙들.'
 pubDate: 'Jan 07 2026'
-heroImage: '/blog-placeholder-2.jpg'
+heroImage: '../../assets/blog-placeholder-2.jpg'
 ---
 
 프롬프트 엔지니어링은 이제 개발자의 핵심 역량이 되었습니다. PromStack을 개발하며 수천 개의 프롬프트를 분석하고, 수백 명의 사용자들과 대화하면서 배운 것들을 정리했습니다.
