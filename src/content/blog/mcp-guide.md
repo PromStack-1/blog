@@ -61,9 +61,9 @@ code %APPDATA%\Claude\claude_desktop_config.json
 {
   "mcpServers": {
     "promstack": {
-      "serverUrl": "https://mcp.promstack.com",
+      "url": "https://mcp.promstack.com",
       "headers": {
-        "Authorization": "Bearer YOUR_API_KEY"
+        "PROMSTACK_API_KEY": "YOUR_API_KEY"
       }
     },
     "github": {

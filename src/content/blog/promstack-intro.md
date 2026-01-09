@@ -76,9 +76,9 @@ PromStack은 **Model Context Protocol (MCP)** 를 완벽하게 지원합니다. 
 {
   "mcpServers": {
     "promstack": {
-      "serverUrl": "https://mcp.promstack.com",
+      "url": "https://mcp.promstack.com",
       "headers": {
-        "Authorization": "Bearer YOUR_API_KEY"
+        "PROMSTACK_API_KEY": "YOUR_API_KEY"
       }
     }
   }
